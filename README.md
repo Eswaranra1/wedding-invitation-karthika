@@ -4,6 +4,12 @@ Premium Tamil wedding invitation built with React and Vite.
 
 ## Local development
 
+Use Node.js 20:
+
+```powershell
+nvm use 20.19.0
+```
+
 ```powershell
 npm install
 npm run dev
