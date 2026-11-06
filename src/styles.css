@@ -1,0 +1,677 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600&family=Noto+Serif+Tamil:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;500;600&display=swap');
+
+:root {
+  --color-background: #24090F;
+  --color-background-secondary: #351018;
+  --color-burgundy: #681C29;
+  --color-burgundy-light: #802D3B;
+  --color-gold: #C9A45C;
+  --color-gold-light: #E8D09A;
+  --color-ivory: #FFF2D6;
+  --color-muted: #D9C6B0;
+  --color-rose: #B86A78;
+  font-family: 'Montserrat', 'Noto Sans Tamil', sans-serif;
+  color: var(--color-ivory);
+  background: var(--color-background);
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; overflow-x: hidden; }
+button { font: inherit; }
+button:focus-visible { outline: 3px solid var(--color-gold-light); outline-offset: 4px; }
+
+.invitation {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(170,64,78,.58), transparent 28rem),
+    linear-gradient(145deg, var(--color-background), var(--color-background-secondary) 52%, var(--color-background));
+}
+
+.fireworks-canvas { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+.opening-screen, .invitation-card { position: relative; z-index: 3; }
+
+.stars, .petals, .temple-border { position: fixed; inset: 0; pointer-events: none; }
+.stars { z-index: 2; overflow: hidden; }
+.stars i {
+  position: absolute; left: var(--x); top: var(--y);
+  width: 3px; height: 3px; border-radius: 50%;
+  background: #fff0b3;
+  box-shadow: 0 0 10px 3px rgba(255,218,135,.72);
+  animation: twinkle var(--duration) var(--delay) infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%,100% { opacity:.28; transform:scale(.5); }
+  45% { opacity:1; transform:scale(1.15); }
+}
+
+.petals { z-index: 2; overflow: hidden; }
+.petals i {
+  position: absolute; left:var(--petal-x); top:-30px;
+  width:9px; height:14px; border-radius:80% 20% 70% 30%;
+  opacity:.45;
+  animation: petalFall var(--petal-duration) var(--petal-delay) infinite linear;
+}
+.petals i.jasmine { background: var(--color-ivory); }
+.petals i.rose { width:8px; height:8px; background:var(--color-rose); border-radius:50% 20% 50% 20%; }
+@keyframes petalFall {
+  0% { transform:translate3d(0,-5vh,0) rotate(0deg); opacity:0; }
+  12% { opacity:.45; }
+  100% { transform:translate3d(45px,105vh,0) rotate(420deg); opacity:0; }
+}
+
+.temple-border {
+  z-index:2; inset:10px;
+  border:1px solid rgba(232,208,154,.82);
+  box-shadow:
+    inset 0 0 0 4px rgba(66,16,26,.72),
+    inset 0 0 0 5px rgba(232,208,154,.45),
+    0 0 24px rgba(201,164,92,.12);
+}
+.temple-border::before, .temple-border::after {
+  content:'✦  ❦  ✦'; position:absolute; left:50%; transform:translateX(-50%);
+  color:var(--color-gold); font-size:10px; letter-spacing:12px; line-height:1;
+}
+.temple-border::before { top:-1px; }
+.temple-border::after { bottom:-1px; }
+
+.opening-screen {
+  min-height:100vh; min-height:100svh;
+  display:grid; place-items:center;
+  padding:32px 20px 150px;
+  animation:openingDarkness 2s ease-out both;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,215,145,.19), transparent 18rem),
+    radial-gradient(circle at 50% 100%, rgba(231,188,98,.22), transparent 30rem),
+    linear-gradient(145deg, #391019, #812d3b 48%, #42101a);
+}
+@keyframes openingDarkness {
+  0% { filter:brightness(.62); }
+  55% { filter:brightness(.88); }
+  100% { filter:brightness(1); }
+}
+.opening-screen::before,
+.opening-screen::after {
+  content:none;
+}
+.opening-arch {
+  position:relative;
+  width:min(760px,72vw); min-height:min(580px,calc(100svh - 180px));
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:72px 40px 76px; text-align:center;
+  border:0;
+  border-radius:0;
+  background:radial-gradient(circle at 50% 44%, rgba(255,220,154,.10), transparent 15rem);
+  box-shadow:none;
+  animation: frameReveal 1.4s ease-out both;
+  overflow:hidden;
+}
+.opening-arch::before {
+  content:""; position:absolute; inset:18px 55px 8px;
+  border:1px solid rgba(244,220,160,.62);
+  border-bottom:0;
+  border-radius:50% 50% 8px 8px / 24% 24% 8px 8px;
+  box-shadow:
+    inset 0 0 22px rgba(255,223,157,.10),
+    0 0 24px rgba(255,223,157,.12);
+}
+.opening-arch::after {
+  display:none;
+}
+@keyframes frameReveal {
+  from { opacity:0; transform:scale(.975) translateY(16px); }
+  to { opacity:1; transform:none; }
+}
+.temple-arch-line {
+  position:absolute; inset:0; width:100%; height:100%;
+  pointer-events:none; overflow:visible;
+}
+.temple-arch-line path {
+  fill:none; stroke:rgba(232,208,154,.82); stroke-width:1.6;
+  stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:1200; stroke-dashoffset:1200;
+  animation:drawTempleLine 2.8s 1.8s ease-out forwards;
+  filter:drop-shadow(0 0 8px rgba(201,164,92,.4));
+}
+.temple-arch-line path:nth-child(2) { animation-delay:2.2s; opacity:.7; }
+.temple-arch-line path:nth-child(3) { animation-delay:2.55s; }
+.temple-arch-line path:nth-child(4) { animation-delay:2.4s; }
+@keyframes drawTempleLine { to { stroke-dashoffset:0; } }
+.gold-crest {
+  position:absolute; top:20px; width:42px; height:42px; display:grid; place-items:center;
+  border:1px solid rgba(201,164,92,.8); border-radius:50%; color:var(--color-gold-light);
+}
+.opening-palace {
+  display:none;
+}
+.opening-arch > p,
+.opening-arch > h1 { position:relative; z-index:2; }
+.palace-base,
+.palace-tower {
+  position:absolute; left:50%;
+  border:1px solid rgba(255,214,126,.95);
+  background:linear-gradient(135deg,rgba(201,164,92,.38),rgba(255,210,112,.12));
+}
+.palace-base {
+  bottom:0; width:82%; height:90px; transform:translateX(-50%);
+  clip-path:polygon(8% 100%,8% 70%,18% 70%,18% 46%,30% 46%,30% 26%,42% 26%,42% 0,58% 0,58% 26%,70% 26%,70% 46%,82% 46%,82% 70%,92% 70%,92% 100%);
+}
+.palace-tower {
+  bottom:48px; width:70px; height:150px;
+  clip-path:polygon(50% 0,65% 18%,65% 35%,88% 35%,88% 100%,12% 100%,12% 35%,35% 35%,35% 18%);
+}
+.palace-tower-center { transform:translateX(-50%); height:210px; }
+.palace-tower-left { left:22%; width:58px; height:130px; }
+.palace-tower-right { left:78%; width:58px; height:130px; }
+@keyframes palaceGlow {
+  from { opacity:.18; filter:drop-shadow(0 0 10px rgba(255,177,53,.24)); }
+  to { opacity:.38; filter:drop-shadow(0 0 24px rgba(255,177,53,.58)); }
+}
+.opening-blessing {
+  margin:0 0 20px; font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(1.25rem,2.5vw,1.875rem); line-height:1.55;
+  color:#fff4d5;
+  text-shadow:0 2px 18px rgba(255,211,126,.38), 0 2px 8px rgba(36,9,15,.75);
+}
+.opening-event {
+  margin:0 0 20px; font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(2.65rem,5vw,4.75rem); line-height:1.15; font-weight:600;
+  color:var(--color-gold-light); text-shadow:0 4px 18px rgba(255,174,54,.32), 0 0 2px rgba(255,239,190,.75);
+}
+.opening-names {
+  margin:0 0 32px; display:flex; align-items:center; justify-content:center;
+  flex-wrap:nowrap; gap:12px; max-width:720px;
+  font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(1.45rem,3vw,2.4rem); line-height:1.45;
+  color:#fff7df;
+  text-shadow:0 3px 14px rgba(255,202,118,.28), 0 3px 10px rgba(36,9,15,.72);
+}
+.opening-name { white-space:nowrap; }
+.opening-heart { color:var(--color-rose); }
+.reveal { animation:textReveal .9s .35s ease-out both; }
+.reveal-delay { animation:textReveal 1.25s 7.1s ease-out both; }
+.reveal-later { animation:textReveal 1.3s 9.1s ease-out both; }
+.opening-blessing {
+  opacity:0;
+  animation:textReveal .9s 6s ease-out forwards;
+}
+.opening-event span {
+  position:relative;
+  color:var(--color-ivory);
+  background:linear-gradient(110deg,var(--color-gold-light) 35%,var(--color-ivory) 48%,var(--color-gold-light) 61%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 4px 24px rgba(201,164,92,.18);
+  animation:titleLightSweep 2.3s 7.15s ease-in-out both;
+}
+@keyframes titleLightSweep {
+  0% { opacity:0; background-position:100% 0; transform:translateY(12px); }
+  40% { opacity:1; }
+  100% { opacity:1; background-position:-20% 0; transform:none; }
+}
+@keyframes textReveal {
+  from { opacity:0; transform:translateY(12px); filter:blur(3px); }
+  to { opacity:1; transform:none; filter:none; }
+}
+.open-button {
+  position:relative; min-width:280px; padding:14px 26px 12px;
+  border:1px solid var(--color-gold); border-radius:999px; cursor:pointer; overflow:hidden;
+  color:var(--color-ivory);
+  background:linear-gradient(135deg,#a94756,#71202e);
+  box-shadow:0 10px 30px rgba(0,0,0,.32), 0 0 20px rgba(232,208,154,.16);
+}
+.open-button span, .open-button small { position:relative; z-index:1; display:block; }
+.open-button span { font-family:'Noto Serif Tamil',serif; font-size:1.05rem; }
+.open-button small { margin-top:3px; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; }
+.open-button {
+  opacity:0;
+  animation:buttonReveal 1.1s 11s ease-out forwards, buttonShimmer 4s 12.1s infinite;
+}
+.open-button::after {
+  content:''; position:absolute; top:-30%; left:-45%; width:34%; height:160%;
+  transform:rotate(18deg); background:linear-gradient(90deg,transparent,rgba(255,242,214,.48),transparent);
+  animation:buttonShimmerSweep 3.6s 12s infinite;
+}
+@keyframes buttonReveal { to { opacity:1; transform:none; } }
+@keyframes buttonShimmerSweep { 0%,55%{left:-45%} 100%{left:125%} }
+@keyframes buttonShimmer { 50%{box-shadow:0 12px 30px rgba(201,164,92,.18)} }
+.skip-intro {
+  position:absolute; right:18px; bottom:-58px;
+  border:1px solid rgba(232,208,154,.45); border-radius:999px;
+  padding:8px 14px; color:var(--color-gold-light);
+  background:rgba(36,9,15,.72); cursor:pointer;
+  font-size:.78rem; letter-spacing:.08em;
+  opacity:0; animation:skipReveal .4s 1.2s forwards;
+  z-index:8;
+}
+@keyframes skipReveal { to { opacity:1; } }
+
+.lamp { position:absolute; bottom:18px; width:150px; height:240px; z-index:5; pointer-events:none; transform-origin:50% 100%; }
+.lamp-left { left:clamp(12px,8vw,110px); }
+.lamp-right { right:clamp(12px,8vw,110px); }
+.lamp-image {
+  position:absolute; left:50%; bottom:0; width:150px; height:240px; object-fit:contain;
+  transform:translateX(-50%); transform-origin:50% 100%;
+  filter:drop-shadow(0 12px 18px rgba(42,16,5,.7));
+  animation:lampReveal 1.2s cubic-bezier(.2,.75,.25,1) both, lampGlowPulse 2.4s 1.2s infinite ease-in-out;
+}
+.lamp-glow {
+  position:absolute; left:50%; top:5px; width:150px; height:150px; transform:translateX(-50%);
+  border-radius:50%; background:radial-gradient(circle,rgba(255,195,79,.34),rgba(232,154,53,.08) 48%,transparent 70%);
+  filter:blur(4px); animation:lampGlow 2.2s infinite ease-in-out;
+}
+.lamp-flame {
+  display:none;
+}
+.lamp-flame-left { left:48px; animation-delay:-.2s; }
+.lamp-flame-center { left:50%; transform:translateX(-50%) scale(1.12); bottom:220px; animation-delay:-.55s; }
+.lamp-flame-right { right:48px; animation-delay:-.8s; }
+@keyframes flameFlicker {
+  0% { transform:rotate(-3deg) scale(.92,1); opacity:.82; }
+  45% { transform:rotate(2deg) scale(1,1.08); opacity:1; }
+  100% { transform:rotate(4deg) scale(.96,1.04); opacity:.88; }
+}
+.lamp-flame-center { animation-name:flameFlickerCenter; }
+@keyframes flameFlickerCenter {
+  0% { transform:translateX(-50%) rotate(-2deg) scale(.94,1.08); opacity:.84; }
+  100% { transform:translateX(-50%) rotate(3deg) scale(1.08,1.16); opacity:1; }
+}
+@keyframes lampReveal { from { opacity:0; transform:translateX(-50%) translateY(35px) scale(.88) } to { opacity:1; transform:translateX(-50%) translateY(0) scale(1) } }
+@keyframes lampGlowPulse { 0%,100%{filter:drop-shadow(0 12px 18px rgba(42,16,5,.7)) brightness(.98)} 50%{filter:drop-shadow(0 12px 24px rgba(255,174,58,.32)) brightness(1.08)} }
+@keyframes lampGlow { 0%,100%{opacity:.55;transform:translateX(-50%) scale(.88)} 50%{opacity:.95;transform:translateX(-50%) scale(1.08)} }
+.opening-light-burst {
+  position:fixed; inset:0; z-index:20; pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,rgba(255,247,210,.98) 0 2%,rgba(232,208,154,.8) 8%,rgba(201,164,92,.25) 24%,transparent 58%);
+  animation:lightBurst .85s ease-out forwards;
+}
+@keyframes lightBurst {
+  0% { opacity:0; transform:scale(.15); }
+  35% { opacity:1; transform:scale(.75); }
+  100% { opacity:0; transform:scale(1.7); }
+}
+
+.invitation-card {
+  width:min(1180px,calc(100% - 32px)); margin:16px auto;
+  border:1px solid rgba(201,164,92,.75);
+  border-radius:28px;
+  box-shadow:0 18px 60px rgba(0,0,0,.38), inset 0 0 0 6px rgba(36,9,15,.96), inset 0 0 0 7px rgba(201,164,92,.32);
+  background-image:
+    linear-gradient(rgba(48,5,10,.9),rgba(48,5,10,.82)),
+    url("../assets/Desktop Invitation Stage.png");
+  background-size:cover;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  animation:cardReveal .9s cubic-bezier(.2,.75,.2,1) both;
+}
+@keyframes cardReveal {
+  from { opacity:0; transform:translateY(18px) scale(.985); clip-path:circle(0% at 50% 50%); }
+  to { opacity:1; transform:none; clip-path:circle(75% at 50% 50%); }
+}
+
+.topbar {
+  min-height:86px; display:flex; align-items:center; justify-content:space-between;
+  padding:16px 58px; border-bottom:1px solid rgba(201,164,92,.28);
+}
+.topbar p { margin:0; font-family:'Noto Serif Tamil',serif; font-size:clamp(.95rem,1.4vw,1.15rem); line-height:1.5; }
+.topbar p span { font-family:'Montserrat',sans-serif; font-size:.7rem; letter-spacing:.12em; }
+.monogram { color:var(--color-gold-light); font-family:'Cormorant Garamond',serif; font-size:1.5rem; }
+
+.hero {
+  width:min(1120px,calc(100% - 48px)); margin:0 auto;
+  min-height:580px; display:grid;
+  grid-template-columns:minmax(0,28fr) minmax(0,44fr) minmax(0,28fr);
+  align-items:center; gap:28px; padding:48px 0;
+}
+.portrait { position:relative; min-width:0; z-index:3; text-align:center; }
+.portrait-frame {
+  position:relative; width:100%; overflow:visible;
+  border:5px solid var(--color-gold);
+  outline:1px solid rgba(232,208,154,.72); outline-offset:5px;
+  border-radius:50%;
+  box-shadow:0 18px 38px rgba(0,0,0,.32), 0 0 0 10px rgba(201,164,92,.08);
+  background:var(--color-background);
+}
+.groom-wrap .portrait-frame { aspect-ratio:1/1; }
+.bride-wrap .portrait-frame { aspect-ratio:1/1; }
+.portrait-frame img {
+  width:100%; height:100%; display:block;
+  border-radius:50%;
+  object-fit:cover; object-position:center 22%;
+}
+.groom-wrap .portrait-frame img {
+  object-fit:cover;
+  object-position:center 22%;
+  background:var(--color-background);
+}
+.portrait-frame::before,
+.portrait-frame::after {
+  content:'';
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+.portrait-frame::before {
+  inset:-11px;
+  z-index:-1;
+  border:2px solid rgba(232,208,154,.92);
+  box-shadow:
+    0 0 18px rgba(232,208,154,.22),
+    inset 0 0 0 2px rgba(201,164,92,.42);
+}
+.portrait-frame::after {
+  inset:-5px;
+  z-index:3;
+  border:1px solid rgba(255,235,176,.72);
+  box-shadow:inset 0 0 12px rgba(255,218,145,.14);
+}
+.royal-frame {
+  border:6px solid transparent;
+  background:
+    linear-gradient(var(--color-background),var(--color-background)) padding-box,
+    linear-gradient(135deg,#fff1bd,#a8742d 28%,#f4d78a 52%,#9a6729 76%,#ecd79b) border-box;
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.38),
+    0 0 0 5px rgba(201,164,92,.28),
+    0 0 28px rgba(232,208,154,.24);
+}
+.royal-frame img {
+  position:relative;
+  z-index:2;
+  box-shadow:inset 0 0 0 1px rgba(255,240,198,.18);
+}
+.royal-frame {
+  isolation:isolate;
+  width:min(100%,270px);
+  height:auto;
+  aspect-ratio:1/1;
+  margin-inline:auto;
+  overflow:visible;
+  border:6px solid transparent;
+  border-radius:50%;
+  outline:none;
+  padding:5px;
+  background:
+    linear-gradient(var(--color-background),var(--color-background)) padding-box,
+    linear-gradient(135deg,#9b6828 0%,#f0d594 18%,#b18238 38%,#fff0b4 52%,#8a5b23 72%,#dfbd70 100%) border-box;
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.42),
+    0 0 0 3px rgba(112,70,28,.72),
+    0 0 0 5px rgba(237,205,130,.72),
+    0 0 22px rgba(232,208,154,.20);
+}
+.royal-frame > img:first-child {
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:50%;
+  object-fit:cover;
+  object-position:center 38%;
+  background:#24090f;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,238,185,.48),
+    0 0 0 2px rgba(92,54,25,.82);
+}
+.royal-frame::before {
+  inset:-13px;
+  z-index:-1;
+  border:1px solid rgba(239,205,128,.82);
+  box-shadow:
+    inset 0 0 0 4px rgba(112,70,28,.48),
+    0 0 14px rgba(232,208,154,.16);
+}
+.royal-frame::after {
+  inset:-7px;
+  z-index:3;
+  border:2px solid transparent;
+  background:
+    linear-gradient(var(--color-background),var(--color-background)) padding-box,
+    repeating-conic-gradient(from 45deg,#8e6229 0deg 1deg,#edcf8b 1deg 2deg,#b88942 2deg 3deg,#7c5020 3deg 4deg) border-box;
+  mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  border-radius:50%;
+}
+.groom-wrap .royal-frame > img:first-child { object-position:center 38%; }
+.bride-wrap .royal-frame > img:first-child { object-position:center 28%; }
+.groom-wrap .royal-frame > img:not(.royal-floral-artwork) {
+  object-fit:cover;
+  object-position:center 46%;
+}
+.bride-wrap .royal-frame > img:not(.royal-floral-artwork) {
+  object-fit:cover;
+  object-position:center 30%;
+}
+.bride-wrap .portrait-frame img { object-position:center 18%; }
+.portrait > p {
+  position:relative; z-index:4; width:max-content; max-width:100%; margin:16px auto 0;
+  color:var(--color-gold-light); font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(1rem,1.4vw,1.35rem); line-height:1.4;
+}
+.center-copy { position:relative; min-width:0; z-index:3; text-align:center; }
+.eyebrow { margin:0 0 12px; font-family:'Noto Sans Tamil',sans-serif; font-size:clamp(1.1rem,1.5vw,1.25rem); color:var(--color-gold-light); }
+.couple-names {
+  margin:0; display:flex; flex-direction:column; align-items:center;
+  font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(1.85rem,3.4vw,3.25rem); line-height:1.18; font-weight:600;
+  color:var(--color-ivory); text-wrap:balance;
+  animation:coupleCelebration 1.8s .25s cubic-bezier(.2,.75,.2,1) both;
+}
+.couple-names em { text-shadow:0 0 18px rgba(184,106,120,.75); }
+@keyframes coupleCelebration {
+  0% { opacity:0; transform:scale(.94); filter:blur(4px); text-shadow:none; }
+  55% { opacity:1; transform:scale(1.025); filter:none; text-shadow:0 0 28px rgba(232,208,154,.28); }
+  100% { transform:scale(1); }
+}
+.couple-names span { white-space:nowrap; }
+.couple-names em { margin:3px 0; font-style:normal; font-size:.65em; color:var(--color-rose); }
+.divider { width:min(170px,60%); height:1px; margin:20px auto; background:linear-gradient(90deg,transparent,var(--color-gold),transparent); }
+.divider span { display:block; width:7px; height:7px; margin:-3px auto 0; transform:rotate(45deg); background:var(--color-gold); }
+.title-ta { margin:0; font-family:'Noto Serif Tamil',serif; font-size:clamp(2rem,3vw,2.75rem); line-height:1.35; color:var(--color-gold-light); }
+.title-en { margin:4px 0 0; font-family:'Cormorant Garamond',serif; font-size:.875rem; letter-spacing:.16em; text-transform:uppercase; }
+
+.event-details {
+  width:min(1060px,calc(100% - 48px)); margin:0 auto; padding:32px 0;
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px;
+  border-top:1px solid rgba(201,164,92,.25); border-bottom:1px solid rgba(201,164,92,.25);
+}
+.event-card {
+  min-width:0; text-align:center; padding:20px 24px;
+  border:1px solid rgba(201,164,92,.22);
+  border-radius:18px;
+  background:rgba(36,9,15,.18);
+  box-shadow:inset 0 0 0 3px rgba(201,164,92,.025);
+}
+.event-card:last-child { border-right:1px solid rgba(201,164,92,.22); }
+.event-card strong {
+  display:block; margin:10px auto 6px; font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(1.55rem,2.4vw,2rem); line-height:1.55; color:var(--color-ivory);
+}
+.event-label { font-family:'Noto Sans Tamil',sans-serif; font-size:clamp(1rem,1.35vw,1.125rem); color:var(--color-gold-light); }
+.event-card small { font-family:'Montserrat',sans-serif; font-size:.75rem; color:var(--color-muted); }
+
+.venue-section {
+  width:min(1060px,calc(100% - 48px)); margin:0 auto; text-align:center;
+  padding:48px 32px; border-bottom:1px solid rgba(201,164,92,.22);
+}
+.venue-section h2 {
+  margin:14px auto 10px; max-width:900px; font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(1.55rem,2.4vw,1.9rem); line-height:1.55; color:var(--color-ivory);
+}
+.venue-section p {
+  margin:0 auto 8px; max-width:820px; font-family:'Noto Sans Tamil',sans-serif;
+  font-size:clamp(1.05rem,1.55vw,1.25rem); line-height:1.75; color:var(--color-muted);
+}
+.venue-section small { font-size:.75rem; color:var(--color-gold-light); }
+
+.family-info { padding:48px 24px; background:rgba(36,9,15,.25); }
+.family-grid {
+  width:min(960px,100%); margin:0 auto; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0;
+}
+.family-grid > div { min-width:0; padding:8px 44px 16px; border-right:1px solid rgba(201,164,92,.22); }
+.family-grid > div:last-child { border-right:0; }
+.family-grid h2 {
+  margin:0 0 18px; text-align:center; font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(1.55rem,2.5vw,2.2rem); line-height:1.45; color:var(--color-gold-light);
+}
+.family-grid p {
+  margin:10px 0; font-family:'Noto Sans Tamil','Noto Serif Tamil',sans-serif;
+  font-size:clamp(1rem,1.35vw,1.2rem); line-height:1.65; text-align:center;
+}
+.family-grid span { color:var(--color-muted); }
+.family-grid strong { font-family:'Noto Serif Tamil',serif; font-size:1.05em; font-weight:500; color:var(--color-ivory); }
+
+.sibling-photo { width:min(190px,50vw); margin:24px auto 0; text-align:center; }
+.sibling-frame { aspect-ratio:1/1; border-width:6px; border-radius:50%; }
+.sibling-frame img { object-fit:contain; }
+.sibling-photo p { margin:12px 0 0; font-family:'Noto Serif Tamil',serif; font-size:clamp(1.05rem,1.6vw,1.35rem); line-height:1.4; }
+
+.reception {
+  width:min(960px,calc(100% - 48px)); margin:48px auto 0; padding:32px 24px;
+  display:grid; grid-template-columns:repeat(4,auto); justify-content:center; align-items:center; gap:24px;
+  border-top:1px solid rgba(201,164,92,.3); border-bottom:1px solid rgba(201,164,92,.3);
+  text-align:center;
+}
+.reception strong, .reception span { font-family:'Noto Sans Tamil',sans-serif; font-size:clamp(1rem,1.35vw,1.15rem); line-height:1.55; }
+.reception strong { font-family:'Noto Serif Tamil',serif; font-size:clamp(1.35rem,2vw,1.75rem); color:var(--color-gold-light); }
+
+.closing-screen {
+  position:relative; min-height:260px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:32px 160px; overflow:hidden; border-top:1px solid rgba(201,164,92,.24); text-align:center;
+  background:radial-gradient(circle at 50% 100%,rgba(201,164,92,.12),transparent 16rem);
+}
+.closing-screen > p { margin:0 0 8px; font-family:'Noto Serif Tamil',serif; font-size:clamp(1.05rem,1.6vw,1.35rem); }
+.closing-screen h2 { margin:0 0 18px; font-family:'Noto Serif Tamil',serif; font-size:clamp(1.4rem,3vw,2.3rem); line-height:1.45; }
+.closing-screen .lamp { transform:scale(.5); bottom:-10px; }
+.closing-screen .lamp-left { left:4%; }
+.closing-screen .lamp-right { right:4%; }
+.closing-actions { display:flex; gap:12px; }
+.closing-actions button {
+  position:relative; z-index:5; border:1px solid var(--color-gold); border-radius:999px;
+  padding:12px 18px; color:var(--color-ivory); background:var(--color-burgundy); cursor:pointer;
+  font-family:'Noto Sans Tamil',sans-serif; font-size:1rem;
+}
+
+@media (max-width:900px) {
+  .opening-arch { width:min(760px,82vw); }
+  .hero { width:min(860px,calc(100% - 32px)); gap:16px; }
+  .portrait-frame { border-width:5px; }
+  .family-grid > div { padding-inline:24px; }
+}
+
+@media (max-width:700px) {
+  .temple-border { inset:5px; }
+  .opening-screen {
+    background:
+      radial-gradient(circle at 50% 38%, rgba(255,215,145,.18), transparent 16rem),
+      radial-gradient(circle at 50% 100%, rgba(231,188,98,.20), transparent 20rem),
+      linear-gradient(145deg, #391019, #812d3b 52%, #42101a);
+  }
+  .invitation-card {
+    background-image:
+      linear-gradient(rgba(48,5,10,.88),rgba(48,5,10,.82)),
+      url("../assets/Ornate Maroon and Gold Wedding Temple Stage.png");
+    background-size:auto 100%;
+    background-position:center top;
+    background-repeat:repeat-y;
+    background-attachment:scroll;
+  }
+  .opening-screen { padding:16px 10px 124px; }
+  .opening-arch {
+    width:calc(100% - 20px); min-height:calc(100svh - 150px);
+    padding:70px 18px 68px; border-radius:44% 44% 16px 16px / 12% 12% 16px 16px;
+  }
+  .opening-arch::before { inset:10px; }
+  .opening-names { display:grid; grid-template-columns:1fr; gap:4px; max-width:100%; font-size:clamp(1.35rem,6vw,1.7rem); }
+  .opening-name { white-space:normal; }
+  .lamp { transform:scale(.7); transform-origin:bottom center; bottom:8px; }
+  .lamp-left { left:-12px; }
+  .lamp-right { right:-12px; }
+  .skip-intro { right:12px; bottom:-52px; }
+
+  .invitation-card { width:100%; margin:0; border-left:0; border-right:0; }
+  .topbar { min-height:76px; padding:12px 20px; }
+  .topbar p { font-size:clamp(.82rem,3vw,1rem); }
+
+  .hero {
+    width:calc(100% - 28px); min-height:0;
+    grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; padding:32px 0 42px;
+  }
+  .center-copy { grid-column:1/-1; grid-row:1; padding:0 0 10px; }
+  .portrait.groom-wrap { grid-column:1; grid-row:2; }
+  .portrait.bride-wrap { grid-column:2; grid-row:2; }
+  .portrait-frame {
+    width:min(42vw,220px); margin-inline:auto;
+    border-width:4px; outline-offset:3px;
+    box-shadow:0 14px 28px rgba(0,0,0,.28), 0 0 0 7px rgba(201,164,92,.07);
+  }
+  .royal-frame {
+    border-width:4px;
+    box-shadow:
+      0 14px 28px rgba(0,0,0,.32),
+      0 0 0 4px rgba(201,164,92,.24),
+      0 0 18px rgba(232,208,154,.18);
+  }
+  .groom-wrap .portrait-frame { aspect-ratio:1/1; }
+  .bride-wrap .portrait-frame { aspect-ratio:1/1; margin-top:0; align-self:center; }
+  .portrait > p { margin-top:10px; font-size:clamp(.9rem,3.8vw,1.1rem); white-space:normal; }
+  .couple-names { font-size:clamp(1.75rem,7vw,2.25rem); }
+  .couple-names span { white-space:normal; text-align:center; }
+  .title-ta { font-size:clamp(1.75rem,7vw,2.1rem); }
+
+  .event-details { width:calc(100% - 32px); grid-template-columns:1fr; gap:0; padding:0; }
+  .event-card {
+    border:0;
+    border-bottom:1px solid rgba(201,164,92,.22);
+    border-radius:0;
+    padding:28px 12px;
+    background:transparent;
+  }
+  .event-card:last-child { border-bottom:0; border-right:0; }
+  .event-card strong { font-size:clamp(1.35rem,5.8vw,1.75rem); line-height:1.55; }
+
+  .venue-section { width:calc(100% - 32px); padding:36px 8px; }
+  .venue-section h2 { font-size:clamp(1.35rem,5.8vw,1.75rem); line-height:1.55; }
+  .venue-section p { font-size:clamp(1rem,4.5vw,1.15rem); line-height:1.75; }
+
+  .family-info { padding:36px 16px; }
+  .family-grid { grid-template-columns:1fr; }
+  .family-grid > div { border-right:0; border-bottom:1px solid rgba(201,164,92,.22); padding:12px 4px 24px; }
+  .family-grid > div:last-child { border-bottom:0; }
+  .family-grid h2 { font-size:clamp(1.55rem,6vw,2rem); }
+  .family-grid p { font-size:clamp(1.05rem,4.5vw,1.2rem); line-height:1.8; }
+
+  .sibling-photo { width:170px; }
+  .reception { width:calc(100% - 32px); grid-template-columns:1fr; gap:8px; margin-top:36px; }
+
+  .closing-screen { min-height:280px; padding:48px 54px 32px; }
+  .closing-screen h2 { font-size:clamp(1.25rem,5.5vw,1.65rem); }
+  .closing-screen .lamp { transform:scale(.38); bottom:-18px; }
+  .closing-actions { flex-direction:column; width:min(220px,100%); }
+  .closing-actions button { width:100%; }
+}
+
+@media (max-width:360px) {
+  .opening-event { font-size:2.25rem; }
+  .opening-names { font-size:1.25rem; }
+  .hero { width:calc(100% - 20px); gap:10px; }
+  .couple-names { font-size:1.6rem; }
+  .portrait > p { font-size:.85rem; }
+  .event-card strong { font-size:1.25rem; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+  .opening-blessing,
+  .opening-event,
+  .opening-names,
+  .open-button { opacity:1!important; }
+  .temple-arch-line path { stroke-dashoffset:0!important; }
+  .opening-light-burst { display:none; }
+  .stars i:nth-child(n+16), .petals, .fireworks-canvas { display:none; }
+}

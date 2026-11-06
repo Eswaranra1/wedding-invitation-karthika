@@ -1,0 +1,167 @@
+.wedding-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wedding-stage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+}
+
+.wedding-stage-torana {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(1120px, 92vw);
+  height: clamp(150px, 16vw, 210px);
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
+}
+
+.wedding-stage-torana-main {
+  position: absolute;
+  inset: 0;
+}
+
+.wedding-stage-torana-support {
+  position: absolute;
+  left: 50%;
+  top: clamp(88px, 8vw, 118px);
+  width: min(520px, 58vw) !important;
+  height: clamp(58px, 6vw, 82px) !important;
+  transform: translateX(-50%);
+  opacity: 0.95;
+}
+
+.wedding-stage-garland {
+  position: absolute;
+  top: clamp(112px, 12vw, 150px);
+  width: clamp(150px, 16vw, 220px);
+  height: clamp(300px, 44vh, 470px);
+  transform-origin: 50% 0;
+  animation: stage-garland-sway 7s ease-in-out infinite alternate;
+}
+
+.wedding-stage-garland-left {
+  left: max(8px, calc(50% - min(570px, 46vw)));
+}
+
+.wedding-stage-garland-right {
+  right: max(8px, calc(50% - min(570px, 46vw)));
+  animation-delay: -3.5s;
+}
+
+.wedding-stage-corner {
+  position: absolute;
+  bottom: 0;
+  width: clamp(170px, 22vw, 300px);
+  height: clamp(120px, 18vw, 220px);
+  opacity: 0.82;
+}
+
+.wedding-stage-corner-left {
+  left: clamp(8px, 2vw, 28px);
+}
+
+.wedding-stage-corner-right {
+  right: clamp(8px, 2vw, 28px);
+  transform: scaleX(-1);
+}
+
+@keyframes stage-garland-sway {
+  from { transform: rotate(-0.45deg) translateY(0); }
+  to { transform: rotate(0.45deg) translateY(2px); }
+}
+
+@media (max-width: 900px) {
+  .wedding-stage-torana {
+    width: min(850px, 96vw);
+    height: clamp(130px, 18vw, 170px);
+  }
+
+  .wedding-stage-torana-support {
+    top: clamp(78px, 10vw, 98px);
+    width: min(430px, 64vw) !important;
+  }
+
+  .wedding-stage-garland {
+    top: clamp(95px, 14vw, 125px);
+    width: clamp(130px, 18vw, 170px);
+    height: clamp(260px, 38vh, 390px);
+  }
+
+  .wedding-stage-corner {
+    width: clamp(150px, 24vw, 220px);
+    height: clamp(110px, 20vw, 170px);
+  }
+}
+
+@media (max-width: 700px) {
+  .wedding-stage-torana {
+    width: 100vw;
+    height: 112px;
+  }
+
+  .wedding-stage-torana-support {
+    top: 68px;
+    width: 60vw !important;
+    height: 52px !important;
+  }
+
+  .wedding-stage-garland {
+    top: 82px;
+    width: 96px;
+    height: 230px;
+    opacity: 0.8;
+  }
+
+  .wedding-stage-garland-left {
+    left: 0;
+  }
+
+  .wedding-stage-garland-right {
+    right: 0;
+  }
+
+  .wedding-stage-corner {
+    width: 150px;
+    height: 125px;
+    opacity: 0.72;
+  }
+}
+
+@media (max-width: 430px) {
+  .wedding-stage-garland {
+    display: none;
+  }
+
+  .wedding-stage-torana {
+    height: 96px;
+  }
+
+  .wedding-stage-torana-support {
+    top: 58px;
+    width: 68vw !important;
+    height: 44px !important;
+  }
+
+  .wedding-stage-corner {
+    width: 118px;
+    height: 100px;
+    opacity: 0.68;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-stage-garland {
+    animation: none;
+  }
+}
